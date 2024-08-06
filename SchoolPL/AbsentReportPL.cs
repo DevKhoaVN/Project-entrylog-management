@@ -21,17 +21,24 @@ namespace EntryLogManagement.SchoolPL
 
         public  void ShowAbsenReportID()
         {
-            int id = InputHepler.GetIntPrompt("Nhập[green] id tìm kiếm : [/]");
-
-           
-            var absent = absentreportService.GetReportID(id);
-            if (absent.Count <= 0)
+            while (true)
             {
-                Console.WriteLine("loi");
-            }
-              
+                int id = InputHepler.GetIntPrompt("Nhập [green]ID tìm kiếm: [/]");
 
-                ShowAbsentReport_Table(absent);
+                var absent = absentreportService.GetReportID(id);
+
+                if (absent.Count > 0)
+                {
+                    ShowAbsentReport_Table(absent);
+                    Console.WriteLine();
+                    break; // Exit the loop once a valid report is found
+                }
+                else
+                {
+                    Console.WriteLine("[red]Không có báo cáo nào với ID đã nhập. Vui lòng nhập lại.[/]");
+                    Console.WriteLine();
+                }
+            }
         }
 
         public void ShowAbsenReportAll()
@@ -44,13 +51,26 @@ namespace EntryLogManagement.SchoolPL
 
         public void ShowAbsenReportRangeTime()
         {
-            DateTime timeStart = InputHepler.GetDate("Nhập[green] ngày bắt đầu(dd/mm/yyyy): [/]");
-            DateTime timeEnd = InputHepler.GetDate("Nhập[green] ngày kết thúc(dd/mm/yyyy): [/]");
+            while (true)
+            {
+                DateTime timeStart = InputHepler.GetDate("Nhập [green]ngày bắt đầu (dd/mm/yyyy): [/]");
+                DateTime timeEnd = InputHepler.GetDate("Nhập [green]ngày kết thúc (dd/mm/yyyy): [/]");
 
-            var absent = absentreportService.GetReportRangeTime(timeStart ,timeEnd);
+                
+                var absent = absentreportService.GetReportRangeTime(timeStart, timeEnd);
 
-            ShowAbsentReport_Table(absent);
+                if (absent.Count > 0)
+                {
+                    ShowAbsentReport_Table(absent);
+                    break; // Exit the loop once valid reports are found
+                }
+                else
+                {
+                    Console.WriteLine("[red]Không có báo cáo vắng mặt nào trong khoảng thời gian này. Vui lòng nhập lại.[/]");
+                }
+            }
         }
+
         public void ShowAbsentReport_Table(List<Absentreport> data)
         {
             int pageSize = 15;
@@ -64,7 +84,7 @@ namespace EntryLogManagement.SchoolPL
                 Console.WriteLine($"Trang {currentPage} / {totalPages}");
 
                 // Tạo bảng và thêm các cột
-                var table = new Table().Expand();
+                var table = new Table().Expand().Centered();
                 table.Title($"[#ffff00]Bảng báo cáo vắng học[/]");
                 table.AddColumn("ID học sinh");
                 table.AddColumn("Tên học sinh");
@@ -94,27 +114,32 @@ namespace EntryLogManagement.SchoolPL
                 AnsiConsole.WriteLine();
 
                 // Điều hướng người dùng
-                if (currentPage < totalPages)
+                if (totalPages == 1)
                 {
-                    Console.WriteLine("Nhấn [Enter] để xem trang tiếp theo hoặc [Esc] để thoát.");
+                    Console.WriteLine("Nhấn [Esc] để thoát.");
                 }
-                else
+                else if (currentPage == 1 && currentPage < totalPages)
                 {
-                    Console.WriteLine("Nhấn [Enter] để thoát.");
+                    Console.WriteLine("Nhấn [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage < totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage == totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [Esc] để thoát.");
                 }
 
                 // Nhận đầu vào từ người dùng để điều hướng
                 var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
+                if (key.Key == ConsoleKey.N && currentPage < totalPages)
                 {
-                    if (currentPage < totalPages)
-                    {
-                        currentPage++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    currentPage++;
+                }
+                else if (key.Key == ConsoleKey.P && currentPage > 1)
+                {
+                    currentPage--;
                 }
                 else if (key.Key == ConsoleKey.Escape)
                 {
@@ -122,7 +147,6 @@ namespace EntryLogManagement.SchoolPL
                 }
             }
         }
-
 
 
     }

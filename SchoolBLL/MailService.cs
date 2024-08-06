@@ -12,7 +12,7 @@ namespace EntryLogManagement.SchoolBLL
     internal class MailService
     {
         private string _fromMail = "khoavanle2@gmail.com";
-        private string _password = "jqbt ywhe tmjl xsgm"; // Ensure this is your app password or actual password
+        private string _password = "jqbt ywhe tmjl xsgm"; 
         private string Toemail = "khoavanle3@gmail.com";
 
         public void SendEmail(string StudentName)

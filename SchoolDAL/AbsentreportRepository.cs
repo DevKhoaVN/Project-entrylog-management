@@ -151,7 +151,8 @@ namespace EntryLogManagement.SchoolDAL
                                 // Tạo đối tượng Entrylog
                                 var absent = new Absentreport
                                 {
-                                    
+                                    StudentId = reader.GetInt32("StudentId"),
+
                                     Parent = new Parent
                                     {
                                         ParentName = reader.GetString("ParentName"),
@@ -162,7 +163,7 @@ namespace EntryLogManagement.SchoolDAL
                                         {
                                             Name = reader.GetString("Name"),
                                             Class = reader.GetString("Class"),
-                                            StudentId = reader.GetInt32("StudentId")
+                                            
                                         }
                                     },
 

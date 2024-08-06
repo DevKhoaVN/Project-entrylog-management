@@ -24,11 +24,30 @@ namespace EntryLogManagement.SchoolPL
 
         public void ShowEntryLogID()
         {
-            int id = InputHepler.GetIntPrompt("Nhập[green] id bạn muốn tìm kiếm : [/]");
-            var log =  entryLogService.GetEtryLogID(id);
+            bool dataAvailable = false;
 
-            ShowEntrylog_Table(log);
+            while (!dataAvailable)
+            {
+                Console.WriteLine();
+                int id = InputHepler.GetIntPrompt("Nhập [green]ID bạn muốn tìm kiếm: [/]");
+
+                var log = entryLogService.GetEtryLogID(id);
+
+                if (log.Count > 0)
+                {
+                    ShowEntrylog_Table(log);
+                    dataAvailable = true; // Exit the loop as data is available
+                    Console.WriteLine();
+                }
+                else
+                {
+                   
+                    AnsiConsole.MarkupLine("[red]Không có dữ liệu cho ID đã nhập.[/] Vui lòng nhập lại.");
+                    Console.WriteLine();
+                }
+            }
         }
+
         public void ShowEntryLogAll()
         {
 
@@ -38,13 +57,30 @@ namespace EntryLogManagement.SchoolPL
         }
         public void ShowEntryLogRangeTime()
         {
-            DateTime timeStart = InputHepler.GetDate("Nhập[green] ngày bắt đầu(dd/mm/yyyy): [/]");
-            DateTime timeEnd = InputHepler.GetDate("Nhập[green] ngày kết thúc(dd/mm/yyyy): [/]");
+            bool dataAvailable = false;
 
-            var log = entryLogService.GetEntryLogRangeTime(timeStart, timeEnd);
+            while (!dataAvailable)
+            {
+                Console.WriteLine();
+                DateTime timeStart = InputHepler.GetDate("Nhập [green]ngày bắt đầu (dd/mm/yyyy): [/]");
+                DateTime timeEnd = InputHepler.GetDate("Nhập [green]ngày kết thúc (dd/mm/yyyy): [/]");
 
-            ShowEntrylog_Table(log);
+                var log = entryLogService.GetEntryLogRangeTime(timeStart, timeEnd);
+
+                if (log.Count > 0)
+                {
+                    ShowEntrylog_Table(log);
+                    dataAvailable = true;
+                    Console.WriteLine();
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Không có dữ liệu trong khoảng thời gian trên.[/] Vui lòng nhập lại.");
+                    Console.WriteLine();
+                }
+            }
         }
+
 
         public void RecoredEntryLog()
         {
@@ -103,7 +139,7 @@ namespace EntryLogManagement.SchoolPL
                 Console.WriteLine($"Trang {currentPage} / {totalPages}");
 
                 // Tạo bảng và thêm các cột
-                var table = new Table();
+                var table = new Table().Centered();
                 table.Title($"[#ffff00]Danh sách học sinh ra vào[/]").HeavyEdgeBorder();
                 table.AddColumn("ID học sinh");
                 table.AddColumn("Tên học sinh");
@@ -131,27 +167,32 @@ namespace EntryLogManagement.SchoolPL
                 AnsiConsole.WriteLine();
 
                 // Điều hướng người dùng
-                if (currentPage < totalPages)
+                if (totalPages == 1)
                 {
-                    Console.WriteLine("Nhấn [Enter] để xem trang tiếp theo hoặc [Esc] để thoát.");
+                    Console.WriteLine("Nhấn [Esc] để thoát.");
                 }
-                else
+                else if (currentPage == 1 && currentPage < totalPages)
                 {
-                    Console.WriteLine("Nhấn [Enter] để thoát.");
+                    Console.WriteLine("Nhấn [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage < totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage == totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [Esc] để thoát.");
                 }
 
                 // Nhận đầu vào từ người dùng để điều hướng
                 var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
+                if (key.Key == ConsoleKey.N && currentPage < totalPages)
                 {
-                    if (currentPage < totalPages)
-                    {
-                        currentPage++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    currentPage++;
+                }
+                else if (key.Key == ConsoleKey.P && currentPage > 1)
+                {
+                    currentPage--;
                 }
                 else if (key.Key == ConsoleKey.Escape)
                 {

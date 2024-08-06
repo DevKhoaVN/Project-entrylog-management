@@ -70,7 +70,6 @@ namespace EntryLogManagement.SchoolDAL
         public List<Alert> GetAlert()
         {
             List<Alert> Alerts = new List<Alert>();
-            DateTime today = DateTime.Now;
 
             try
             {
@@ -79,11 +78,10 @@ namespace EntryLogManagement.SchoolDAL
                     connect.Open();
 
                     //Lệnh truy vấn
-                    string query = " select s.Name  , s.Class, p.ParentName ,p.ParentPhone ,  p.ParentAddress , p.ParentEmail , a.AlertTime from alert as a inner join student as s on a.StudentId = s.StudentId inner join parent as p on s.StudentId = p.ParentId where a.AlertTime = @today ";
+                    string query = "SELECT s.Name, s.Class, p.ParentName, p.ParentPhone, p.ParentAddress, p.ParentEmail, MIN(a.AlertTime) AS AlertTime FROM alert AS a INNER JOIN student AS s ON a.StudentId = s.StudentId INNER JOIN parent AS p ON s.ParentId = p.ParentId WHERE DATE(a.AlertTime) = CURRENT_DATE() GROUP BY s.Name, s.Class, p.ParentName, p.ParentPhone, p.ParentAddress, p.ParentEmail;";
                     // Tạo command
                     using (var cmd = new MySqlCommand(query, connect))
                     {
-                        cmd.Parameters.AddWithValue("@today", today);
 
                         // Thực hiện truy vấn
                         using (var reader = cmd.ExecuteReader())

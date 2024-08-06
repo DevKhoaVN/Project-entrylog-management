@@ -46,7 +46,7 @@ namespace EntryLogManagement.SchoolPL
                 Console.WriteLine($"Trang {currentPage} / {totalPages}");
 
                 // Tạo bảng và thêm các cột
-                var table = new Table().Expand();
+                var table = new Table().Expand().Centered();
                 table.Title($"[#ffff00]Danh sách cảnh báo[/]").HeavyEdgeBorder();
                 table.AddColumn("Tên học sinh");
                 table.AddColumn("Lớp");
@@ -76,27 +76,35 @@ namespace EntryLogManagement.SchoolPL
                 AnsiConsole.WriteLine();
 
                 // Điều hướng người dùng
-                if (currentPage < totalPages)
+                if (totalPages == 1)
                 {
-                    Console.WriteLine("Nhấn [Enter] để xem trang tiếp theo hoặc [Esc] để thoát.");
+                    Console.WriteLine("Nhấn [Esc] để thoát.");
+                }else if(totalPages == 0)
+                {
+                    Console.WriteLine("Nhấn [Esc] để thoát.");
                 }
-                else
+                else if (currentPage == 1 && currentPage < totalPages)
                 {
-                    Console.WriteLine("Nhấn [Enter] để thoát.");
+                    Console.WriteLine("Nhấn [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage < totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage == totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [Esc] để thoát.");
                 }
 
                 // Nhận đầu vào từ người dùng để điều hướng
                 var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
+                if (key.Key == ConsoleKey.N && currentPage < totalPages)
                 {
-                    if (currentPage < totalPages)
-                    {
-                        currentPage++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    currentPage++;
+                }
+                else if (key.Key == ConsoleKey.P && currentPage > 1)
+                {
+                    currentPage--;
                 }
                 else if (key.Key == ConsoleKey.Escape)
                 {
@@ -104,6 +112,7 @@ namespace EntryLogManagement.SchoolPL
                 }
             }
         }
+
 
     }
 }

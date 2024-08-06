@@ -21,27 +21,28 @@ namespace EntryLogManagement.SchoolPL
         {
             studentService = new StudentService();
         }
-        public void ShowStudentInforÌD()
+        public void ShowStudentInforID()
         {
-            re_enter:
-            int id = InputHepler.GetIntPrompt("Nhập[green] id : [/]");
-
-            
-            var students = studentService.GetStudentID(id);
             while (true)
             {
-                if (students.Count == 0)
+                int id = InputHepler.GetIntPrompt("Nhập [green]ID: [/]");
+
+                var students = studentService.GetStudentID(id);
+
+                if (students.Count > 0)
                 {
-                    AnsiConsole.MarkupLine("[red]Học sinh không tồn tại,[/] vui lòng nhập lại.");
-                    goto re_enter;
-                    
+                    StudentInfor_Table(students);
+                    Console.WriteLine();
+                    break; // Exit the loop when a student is found
                 }
-
-                break;
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Học sinh không tồn tại, vui lòng nhập lại.[/]");
+                    Console.WriteLine();
+                }
             }
-
-            StudentInfor_Table(students);
         }
+
 
         public void ShowStudentInforAll()
         {
@@ -49,15 +50,27 @@ namespace EntryLogManagement.SchoolPL
 
             StudentInfor_Table(student);
         }
-
         public void ShowStudentInforByRangeTime()
         {
-            DateTime timeStart = InputHepler.GetDate("Nhập[green] ngày bắt đầu(dd/mm/yyyy): [/]");
-            DateTime timeEnd = InputHepler.GetDate("Nhập[green] ngày kết thúc(dd/mm/yyyy): [/]");
+            while (true)
+            {
+                DateTime timeStart = InputHepler.GetDate("Nhập [green]ngày bắt đầu (dd/mm/yyyy): [/]");
+                DateTime timeEnd = InputHepler.GetDate("Nhập [green]ngày kết thúc (dd/mm/yyyy): [/]");
 
-            var students = studentService.GetStudentByRangeTime(timeStart , timeEnd);
+                var students = studentService.GetStudentByRangeTime(timeStart, timeEnd);
 
-            StudentInfor_Table(students);
+                if (students.Count > 0)
+                {
+                    StudentInfor_Table(students);
+                    Console.WriteLine();
+                    break; // Exit the loop once students are found
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Không có học sinh trong khoảng thời gian này, vui lòng nhập lại.[/]");
+                    Console.WriteLine();
+                }
+            }
         }
 
         // Thêm học sinh
@@ -152,8 +165,8 @@ namespace EntryLogManagement.SchoolPL
                 Console.WriteLine($"Trang {currentPage} / {totalPages}");
 
                 // Tạo bảng và thêm các cột
-                var table = new Table();
-                table.Title("[red]Danh sách thông tin học sinh[/]").HeavyEdgeBorder();
+                var table = new Table().Centered();
+                table.Title("[yellow]Danh sách thông tin học sinh[/]").HeavyEdgeBorder();
                 table.AddColumn("ID học sinh");
                 table.AddColumn("Tên học sinh");
                 table.AddColumn("Giới tính");
@@ -192,27 +205,32 @@ namespace EntryLogManagement.SchoolPL
                 AnsiConsole.WriteLine();
 
                 // Điều hướng người dùng
-                if (currentPage < totalPages)
+                if (totalPages == 1)
                 {
-                    Console.WriteLine("Nhấn [Enter] để xem trang tiếp theo hoặc [Esc] để thoát.");
+                    Console.WriteLine("Nhấn [Esc] để thoát.");
                 }
-                else
+                else if (currentPage == 1 && currentPage < totalPages)
                 {
-                    Console.WriteLine("Nhấn [Enter] để thoát.");
+                    Console.WriteLine("Nhấn [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage < totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage == totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [Esc] để thoát.");
                 }
 
                 // Nhận đầu vào từ người dùng để điều hướng
                 var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
+                if (key.Key == ConsoleKey.N && currentPage < totalPages)
                 {
-                    if (currentPage < totalPages)
-                    {
-                        currentPage++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    currentPage++;
+                }
+                else if (key.Key == ConsoleKey.P && currentPage > 1)
+                {
+                    currentPage--;
                 }
                 else if (key.Key == ConsoleKey.Escape)
                 {
@@ -220,6 +238,7 @@ namespace EntryLogManagement.SchoolPL
                 }
             }
         }
+
 
     }
 }

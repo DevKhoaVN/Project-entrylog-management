@@ -76,9 +76,9 @@ namespace EntryLogManagement.SchoolBLL
                             mailService.SendEmail(item.Student.Name);
                         }
 
-                        foreach (var item in students)
+                        foreach (var alert in students)
                         {
-                            alertRepository.InsertAlert(item.StudentId, DateTime.Now);
+                            alertRepository.InsertAlert(alert.StudentId, DateTime.Now);
                         }
 
                         // Phát âm thanh thông báo

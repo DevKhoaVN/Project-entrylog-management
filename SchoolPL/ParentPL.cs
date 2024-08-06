@@ -46,12 +46,13 @@ namespace EntryLogManagement.SchoolPL
 
             if (result)
             {
-           
+                Console.WriteLine();
                 AnsiConsole.MarkupLine("[green]Gửi báo cáo vắng học thành công.[/]");
                 AnsiConsole.WriteLine();
             }
             else
             {
+                Console.WriteLine();
                 AnsiConsole.MarkupLine("[green]Gửi báo cáo vắng học thất bại.[/]");
                 AnsiConsole.WriteLine();
             }
@@ -88,7 +89,7 @@ namespace EntryLogManagement.SchoolPL
                 Console.WriteLine($"Trang {currentPage} / {totalPages}");
 
                 // Tạo bảng và thêm các cột
-                var table = new Table();
+                var table = new Table().Centered();
                 table.Title($"[#ffff00]Danh sách học sinh ra vào[/]").HeavyEdgeBorder();
                 table.AddColumn("ID học sinh");
                 table.AddColumn("Tên học sinh");
@@ -116,27 +117,32 @@ namespace EntryLogManagement.SchoolPL
                 AnsiConsole.WriteLine();
 
                 // Điều hướng người dùng
-                if (currentPage < totalPages)
+                if (totalPages == 1)
                 {
-                    Console.WriteLine("Nhấn [Enter] để xem trang tiếp theo hoặc [Esc] để thoát.");
+                    Console.WriteLine("Nhấn [Esc] để thoát.");
                 }
-                else
+                else if (currentPage == 1 && currentPage < totalPages)
                 {
-                    Console.WriteLine("Nhấn [Enter] để thoát.");
+                    Console.WriteLine("Nhấn [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage < totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage == totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [Esc] để thoát.");
                 }
 
                 // Nhận đầu vào từ người dùng để điều hướng
                 var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
+                if (key.Key == ConsoleKey.N && currentPage < totalPages)
                 {
-                    if (currentPage < totalPages)
-                    {
-                        currentPage++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    currentPage++;
+                }
+                else if (key.Key == ConsoleKey.P && currentPage > 1)
+                {
+                    currentPage--;
                 }
                 else if (key.Key == ConsoleKey.Escape)
                 {
@@ -144,6 +150,7 @@ namespace EntryLogManagement.SchoolPL
                 }
             }
         }
+
 
         // Show bảng absentreport
         public void ShowAbsentReport_Table(List<Absentreport> data)
@@ -179,7 +186,7 @@ namespace EntryLogManagement.SchoolPL
                         $"{report.Parent.Students.Class}",
                         $"{report.CreateDay:yyyy-MM-dd}",
                         $"{report.Reason}"
-                    ); 
+                    );
                 }
 
                 // Hiển thị bảng
@@ -187,27 +194,32 @@ namespace EntryLogManagement.SchoolPL
                 AnsiConsole.WriteLine();
 
                 // Điều hướng người dùng
-                if (currentPage < totalPages)
+                if (totalPages == 1)
                 {
-                    Console.WriteLine("Nhấn [Enter] để xem trang tiếp theo hoặc [Esc] để thoát.");
+                    Console.WriteLine("Nhấn [Esc] để thoát.");
                 }
-                else
+                else if (currentPage == 1 && currentPage < totalPages)
                 {
-                    Console.WriteLine("Nhấn [Enter] để thoát.");
+                    Console.WriteLine("Nhấn [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage < totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [N] để xem trang tiếp theo, [Esc] để thoát.");
+                }
+                else if (currentPage > 1 && currentPage == totalPages)
+                {
+                    Console.WriteLine("Nhấn [P] để quay lại trang trước, [Esc] để thoát.");
                 }
 
                 // Nhận đầu vào từ người dùng để điều hướng
                 var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
+                if (key.Key == ConsoleKey.N && currentPage < totalPages)
                 {
-                    if (currentPage < totalPages)
-                    {
-                        currentPage++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    currentPage++;
+                }
+                else if (key.Key == ConsoleKey.P && currentPage > 1)
+                {
+                    currentPage--;
                 }
                 else if (key.Key == ConsoleKey.Escape)
                 {
@@ -215,5 +227,6 @@ namespace EntryLogManagement.SchoolPL
                 }
             }
         }
+
     }
 }

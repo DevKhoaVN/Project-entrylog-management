@@ -40,6 +40,11 @@ namespace EntryLogManagement.SchoolPL
                     return reuslt;
                     break;
                 }
+                else
+                {
+                    AnsiConsole.MarkupLine("[red]Bạn đã nhập sai tài khoản hoặc mật khẩu[/]");
+                    Console.WriteLine();
+                }
                 
             }
                 
@@ -58,7 +63,8 @@ namespace EntryLogManagement.SchoolPL
                 var result = userService.RegisterUser(UserName, Password, ID);
                 if (result)
                 {
-                    AnsiConsole.Markup("[green]Bạn đã đăng kí thành công[/]");
+                    Console.WriteLine();
+                    AnsiConsole.MarkupLine("[green]Bạn đã đăng kí thành công[/]");
                     Console.WriteLine();
                     break;
                 }    

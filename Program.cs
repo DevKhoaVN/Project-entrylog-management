@@ -7,7 +7,7 @@ using System.Text;
 internal class Program
 {
 
-    public static void Main(string[] args)
+    public static  void Main(string[] args)
     {
         
 
@@ -32,6 +32,8 @@ internal class Program
                 // xử lí đăng kí tài khoản
                 case 1:
                     // khởi tạo và gọi phương thức đăng kí
+                    AnsiConsole.MarkupLine("[[[yellow]Đăng kí[/]]]");
+                    Console.WriteLine();
                     userPL.Register();
                     break;
 
@@ -39,6 +41,8 @@ internal class Program
                 case 2:
 
                     // xác định vai trò của user
+                    AnsiConsole.MarkupLine("[[[yellow]Đăng nhập[/]]]");
+                    Console.WriteLine();
                     var user = userPL.Login();
                     int role ;
                     int parentid;
@@ -58,7 +62,7 @@ internal class Program
                             case 1:
                             int hour1 = 0, minute1 = 4 , hour2 = 18, minute2 = 1;
                             SchedulerService s = new SchedulerService();
-                             s.StartScheduler(hour1, minute1, hour2, minute2);
+                            s.StartScheduler(hour1, minute1, hour2, minute2);
 
                             bool isCheckAdmin = true;
 
@@ -194,7 +198,7 @@ internal class Program
                                                                 // Lọc theo id học sinh
                                                                 case 1:
 
-                                                                    studentPL.ShowStudentInforÌD();
+                                                                    studentPL.ShowStudentInforID();
                                                                     break;
 
                                                                 // Lọc theo lớp
