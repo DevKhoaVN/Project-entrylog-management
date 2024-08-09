@@ -31,7 +31,7 @@ namespace EntryLogManagement.SchoolPL
                 {
                     ShowAbsentReport_Table(absent);
                     Console.WriteLine();
-                    break; // Exit the loop once a valid report is found
+                    break; 
                 }
                 else
                 {
@@ -62,11 +62,13 @@ namespace EntryLogManagement.SchoolPL
                 if (absent.Count > 0)
                 {
                     ShowAbsentReport_Table(absent);
-                    break; // Exit the loop once valid reports are found
+                    break; 
                 }
                 else
                 {
-                    Console.WriteLine("[red]Không có báo cáo vắng mặt nào trong khoảng thời gian này. Vui lòng nhập lại.[/]");
+                    Console.WriteLine();
+                    AnsiConsole.MarkupLine("[red]Không có báo cáo vắng mặt nào trong khoảng thời gian này. Vui lòng nhập lại.[/]");
+                    Console.WriteLine();
                 }
             }
         }
@@ -117,14 +119,17 @@ namespace EntryLogManagement.SchoolPL
                 if (totalPages == 1)
                 {
                     Console.WriteLine("Nhấn [Esc] để thoát.");
+                    Console.WriteLine();
                 }
                 else if (currentPage == 1 && currentPage < totalPages)
                 {
                     Console.WriteLine("Nhấn [N] để xem trang tiếp theo, [Esc] để thoát.");
+                    Console.WriteLine();
                 }
                 else if (currentPage > 1 && currentPage < totalPages)
                 {
                     Console.WriteLine("Nhấn [P] để quay lại trang trước, [N] để xem trang tiếp theo, [Esc] để thoát.");
+                    Console.WriteLine();
                 }
                 else if (currentPage > 1 && currentPage == totalPages)
                 {

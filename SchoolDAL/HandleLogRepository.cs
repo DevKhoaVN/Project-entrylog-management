@@ -11,6 +11,7 @@ namespace EntryLogManagement.SchoolDAL
 {
     internal class HandleLogRepository:BaseRposiorty
     {
+        // chèn tài khoản đăng kí vào database
         public bool HandleRegister(string username, string password, int id)
         {
             try
@@ -19,28 +20,33 @@ namespace EntryLogManagement.SchoolDAL
                 {
                     connect.Open();
                
+                    // truy vấn
                     string query = "INSERT INTO User (UserName, Password, ParentId, RoleId) VALUES (@username, @password, @id, 2)";
 
+                    // tọa cmd
                     using (var cmd = new MySqlCommand(query, connect))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
                         cmd.Parameters.AddWithValue("@password", password);
                         cmd.Parameters.AddWithValue("@id", id);
 
+                        // thực hiện truy vấn
                         var result = cmd.ExecuteNonQuery();
-                        return result > 0;
+
+                        return result > 0; // trả vê true nếu chèn thành công
                     }
                 }
             }
             catch (Exception ex)
             {
                 // Xử lý các lỗi khác
-                AnsiConsole.Markup($"[red]Lỗi: ID của bạn không hợp lệ.[/]");
-                AnsiConsole.WriteLine();
+                AnsiConsole.Markup($"[red]ID của bạn không hợp lệ.[/]");
+                Console.WriteLine();
                 return false;
             }
         }
 
+        // hàm xử lí đăng nhập
         public User HandleLogin(string username, string password)
         {
             try
@@ -87,6 +93,7 @@ namespace EntryLogManagement.SchoolDAL
             return null; // Trả về null nếu không đăng nhập thành công
         }
 
+        // hàm kiểm tra username có tồn tại không
         public bool HandleUserName(string username)
         {
             try
@@ -120,9 +127,6 @@ namespace EntryLogManagement.SchoolDAL
                 return false; // Trả về false khi có lỗi xảy ra
             }
         }
-
-
-
 
     }
 }

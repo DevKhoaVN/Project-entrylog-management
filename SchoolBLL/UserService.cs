@@ -21,13 +21,6 @@ namespace EntryLogManagement.SchoolBLL
 
         public bool RegisterUser(string username, string password, int parentId)
         {
-            if (!handleLogRepository.HandleUserName(username))
-            {
-                AnsiConsole.Markup("[red]UserName đã tồn tại[/]");
-                Console.WriteLine();
-                return false; // Tên người dùng đã tồn tại
-            }
-
 
             return handleLogRepository.HandleRegister(username, password, parentId);
         }

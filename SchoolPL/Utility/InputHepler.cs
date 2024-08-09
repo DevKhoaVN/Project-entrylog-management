@@ -258,23 +258,23 @@ namespace EntryLogManagement.SchoolPL.Utility
             // Nhập thông tin phụ huynh
             var parent = new Parent
             {
-                ParentName = PromptUserInput("Nhập tên phụ huynh: "),
-                ParentEmail = GetValidEmail("Nhập email phụ huynh: "),
-                ParentPhone = GetValidPhoneNumber("Nhập số điện thoại phụ huynh: "),
-                ParentAddress = PromptUserInput(" Nhập  địa chỉ phụ huynh: ")
+                ParentName = PromptUserInput("Nhập [green]tên phụ huynh:[/] "),
+                ParentEmail = GetValidEmail("Nhập [green]email phụ huynh:[/] "),
+                ParentPhone = GetValidPhoneNumber("Nhập [green]số điện thoại phụ huynh:[/] "),
+                ParentAddress = PromptUserInput("Nhập [green]địa chỉ phụ huynh:[/] ")
             };
 
             // Nhập thông tin học sinh
             var student = new Student
             {
                 Parent = parent,
-                Name = PromptUserInput("Nhập tên học sinh: "),
-                Gender = PromptUserInput("Nhập giới tính học sinh (Nam/Nữ): "),
-                DayOfBirth = GetDate("Nhập ngày sinh học sinh (dd/MM/yyyy): "),
-                Class = PromptUserInput("Nhập lớp học sinh: "),
-                Address = PromptUserInput("Nhập địa chỉ học sinh: "),
-                Phone = GetValidPhoneNumber("Nhập số điện thoại học sinh: "),
-                JoinDay = GetDate("Nhập ngày nhập học sinh (dd/MM/yyyy): ")
+                Name = PromptUserInput("Nhập [green]tên học sinh:[/] "),
+                Gender = PromptUserInput("Nhập [green]giới tính học sinh (Nam/Nữ):[/] "),
+                DayOfBirth = GetDate("Nhập [green]ngày sinh học sinh (dd/MM/yyyy):[/] "),
+                Class = PromptUserInput("Nhập [green]lớp học sinh:[/] "),
+                Address = PromptUserInput("Nhập [green]địa chỉ học sinh:[/] "),
+                Phone = GetValidPhoneNumber("Nhập [green]số điện thoại học sinh:[/] "),
+                JoinDay = GetDate("Nhập [green]ngày nhập học sinh (dd/MM/yyyy):[/] ")
             };
 
             return student;

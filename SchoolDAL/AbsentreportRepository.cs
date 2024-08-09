@@ -61,7 +61,7 @@ namespace EntryLogManagement.SchoolDAL
             return true;
         }
 
-
+        // Trả về báo cáo vắng mặt theo id
         public List<Absentreport> GetAbsenreportid(int id)
         {
             List<Absentreport> Absentreport = new List<Absentreport>();
@@ -125,6 +125,7 @@ namespace EntryLogManagement.SchoolDAL
             return Absentreport;
         }
 
+        // trả về báo cáo vắng mặt cho cho phụ huynh 
         public List<Absentreport> GetAbsenreportidParent(int id)
         {
             List<Absentreport> Absentreport = new List<Absentreport>();
@@ -189,6 +190,7 @@ namespace EntryLogManagement.SchoolDAL
             return Absentreport;
         }
 
+        // trả về tất cả báo cáo vắng mặt
         public List<Absentreport> GetAbsenreportAll()
         {
             List<Absentreport> Absentreport = new List<Absentreport>();
@@ -248,6 +250,7 @@ namespace EntryLogManagement.SchoolDAL
             return Absentreport;
         }
 
+        // trả về báo cáo vắng mặt theo vùng thời gian
         public List<Absentreport> GetAbsenreportRangeTime(DateTime timeStart , DateTime timeEnd)
         {
             List<Absentreport> Absentreport = new List<Absentreport>();
@@ -259,7 +262,7 @@ namespace EntryLogManagement.SchoolDAL
                     connect.Open();
 
                     //Lệnh truy vấn
-                    string query = "SELECT  s.StudentId , p.ParentName , s.Name , s.Class , a.Reason , a.CreateDay , p.ParentPhone FROM absentreport as a inner join parent as p on a.ParentId = p.ParentId inner join student as s on s.ParentId = p.ParentId  where a.CreateDay >= @timeStart && a.CreateDay  <= @timeEnd order by a.CreateDay desc";
+                    string query = "SELECT  s.StudentId , p.ParentName , s.Name , s.Class , a.Reason , a.CreateDay , p.ParentPhone FROM absentreport as a inner join parent as p on a.ParentId = p.ParentId inner join student as s on s.ParentId = p.ParentId  where a.CreateDay >= @timeStart && a.CreateDay <= @timeEnd order by a.CreateDay desc";
                     // Tạo command
                     using (var cmd = new MySqlCommand(query, connect))
                     {
@@ -308,7 +311,6 @@ namespace EntryLogManagement.SchoolDAL
             }
             return Absentreport;
         }
-
 
        
     }

@@ -19,7 +19,6 @@ namespace EntryLogManagement.SchoolDAL
 
 
         // Chèn log
-
         public bool InsertEntryLog(Entrylog log)
         {
             try
@@ -286,9 +285,12 @@ namespace EntryLogManagement.SchoolDAL
             }
             return EntryLogs;
         }
+
+        // hàm trả về log ngày hiển tại
         public async Task<List<Entrylog>> GetEntryLogTodayAsync()
         {
-            DateTime today = DateTime.Now.Date; // Get only the date part
+            DateTime today = DateTime.Now.Date; // lấy thời gian hiện tại
+
             List<Entrylog> EntryLogs = new List<Entrylog>();
 
             try
@@ -345,6 +347,7 @@ namespace EntryLogManagement.SchoolDAL
         }
 
 
+        // trả về các log bất thường thực hiện chức năng cảnh báo
         public List<Entrylog> GetEntryLogToAlert()
         {
             List<Entrylog> EntryLogs = new List<Entrylog>();

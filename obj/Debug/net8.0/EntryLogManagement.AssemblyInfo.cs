@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EntryLogManagement")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+963c73f0d040c65d79b74ac87ce66c76d9023539")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+97e6306bf82bc6041b759674e4fd60e27e61aace")]
 [assembly: System.Reflection.AssemblyProductAttribute("EntryLogManagement")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EntryLogManagement")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,8 +1,10 @@
 ﻿using EntryLogManagement.SchoolBLL;
+using EntryLogManagement.SchoolDAL;
 using EntryLogManagement.SchoolPL.Utility;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,11 +16,13 @@ namespace EntryLogManagement.SchoolPL
     internal class UserPL
     {
         private readonly UserService userService;
+        private readonly HandleLogRepository handleLogRepository;
        
 
         public UserPL()
         {
             userService = new UserService();
+            handleLogRepository = new HandleLogRepository();
           
 
         }
@@ -55,8 +59,17 @@ namespace EntryLogManagement.SchoolPL
         {
             while(true)
             {
+                re_enter:
                 string UserName = InputHepler.PromptUserInput("Nhập [green]UserName: [/]");
+
+                if (!handleLogRepository.HandleUserName(UserName))
+                {
+                    AnsiConsole.Markup("[red]UserName đã tồn tại[/]");
+                    Console.WriteLine();
+                    goto re_enter;
+                }
                 string Password = InputHepler.PromptUserInput("Nhập [green]Password: [/]");
+                re_enter2:
                 int ID = InputHepler.GetIntPrompt("Nhập [green]ID của bạn : [/]");
                
 
@@ -67,7 +80,11 @@ namespace EntryLogManagement.SchoolPL
                     AnsiConsole.MarkupLine("[green]Bạn đã đăng kí thành công[/]");
                     Console.WriteLine();
                     break;
-                }    
+                }
+                else
+                {
+                    goto re_enter2;
+                } 
                 Console.WriteLine();
                 
             }

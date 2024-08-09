@@ -23,10 +23,10 @@ public partial class Student
 
     public DateTime JoinDay { get; set; }
 
-    public virtual Absentreport Absentreports { get; set; } 
-    public virtual Alert Alerts { get; set; }
+    public  Absentreport Absentreports { get; set; } 
+    public  Alert Alerts { get; set; }
 
-    public virtual Entrylog Entrylogs { get; set; }
+    public  Entrylog Entrylogs { get; set; }
 
-    public virtual Parent Parent { get; set; }
+    public  Parent Parent { get; set; }
 }

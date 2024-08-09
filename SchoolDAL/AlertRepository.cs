@@ -66,7 +66,7 @@ namespace EntryLogManagement.SchoolDAL
                 return false;
             }
         }
-        //Hàm trả về tất cả entrylog 
+        //Hàm trả về tất cả Alert ngày hiện tại
         public List<Alert> GetAlert()
         {
             List<Alert> Alerts = new List<Alert>();

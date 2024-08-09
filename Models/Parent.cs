@@ -17,5 +17,5 @@ public partial class Parent
 
     public Absentreport Absentreports { get; set; }
 
-    public virtual Student Students { get; set; }
+    public Student Students { get; set; }
 }

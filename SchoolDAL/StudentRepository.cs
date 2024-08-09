@@ -17,6 +17,7 @@ namespace EntryLogManagement.SchoolDAL
 
         }
 
+        //Thêm học sinh và phụ huynh
         public bool AddStudent(Student student)
         {
             try
@@ -76,11 +77,14 @@ namespace EntryLogManagement.SchoolDAL
         }
 
 
-        // Xóa
-
+        
+        // Xóa học sinh
         public bool DeleteStudent(int studentId)
         {
+            // lấy ra học sinh đầu tiền với id vừa nhập
             var inforStudent = GetStudentId(studentId).FirstOrDefault();
+
+            // lấy ra id của phụ huynh
             var parentid = inforStudent.ParentId;
      
             try
@@ -117,11 +121,9 @@ namespace EntryLogManagement.SchoolDAL
             }
         }
 
-        // update
-
+        // update thông tin học sinh
         public bool UpdateStudent(Student student, int studentId)
-        {      
-            
+        {
             try
             {
                 using (var connect = GetConnection())
@@ -186,9 +188,10 @@ namespace EntryLogManagement.SchoolDAL
         }
 
 
-
+        // Lấy ra học sinh và phụ huynh với id truyền vào
         public List<Student> GetStudentId(int id)
         {
+            // tạo list để lưu học sinh từ database
             List<Student> Students = new List<Student>();
 
             try
@@ -248,8 +251,10 @@ namespace EntryLogManagement.SchoolDAL
         }
 
 
+        // lấy ra tất cả học sinh
         public List<Student> GetStudentAll()
         {
+            // tạo list để lưu học sinh từ database
             List<Student> Students = new List<Student>();
 
             try
@@ -305,9 +310,10 @@ namespace EntryLogManagement.SchoolDAL
             return Students;
         }
 
-
+        // lấy học sinh theo vùng thời gian
         public List<Student> GetStudentByRangeTime(DateTime timeStart, DateTime timeEnd)
         {
+            // tạo list để lưu học sinh từ database
             List<Student> students = new List<Student>();
 
             try
@@ -371,7 +377,6 @@ namespace EntryLogManagement.SchoolDAL
 
             return students;
         }
-
 
     }
 }

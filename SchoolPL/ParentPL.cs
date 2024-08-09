@@ -197,18 +197,22 @@ namespace EntryLogManagement.SchoolPL
                 if (totalPages == 1)
                 {
                     Console.WriteLine("Nhấn [Esc] để thoát.");
+                    Console.WriteLine();
                 }
                 else if (currentPage == 1 && currentPage < totalPages)
                 {
                     Console.WriteLine("Nhấn [N] để xem trang tiếp theo, [Esc] để thoát.");
+                    Console.WriteLine();
                 }
                 else if (currentPage > 1 && currentPage < totalPages)
                 {
                     Console.WriteLine("Nhấn [P] để quay lại trang trước, [N] để xem trang tiếp theo, [Esc] để thoát.");
+                    Console.WriteLine();
                 }
                 else if (currentPage > 1 && currentPage == totalPages)
                 {
                     Console.WriteLine("Nhấn [P] để quay lại trang trước, [Esc] để thoát.");
+                    Console.WriteLine();
                 }
 
                 // Nhận đầu vào từ người dùng để điều hướng
